@@ -208,6 +208,28 @@ def user_get(re):
             "message": "Miss authorization information"
         }
     return json.dumps(data)
+    
+@app.route('/sum', methods=['POST'])
+def sum():
+    try:
+        body = request.get_json()
+        int_value1 = int(body.get('number1'))
+        int_value2 = int(body.get('number2'))
+        result=int_value1+int_value2
+        data = {
+                    "code": 0,
+                    "data": {
+                        "result": result
+                    },
+                    "message": "Your calculation was successful"
+                }
+        return json.dumps(data)
+    except Exception as e:
+        err = {
+            "code": "error",
+            "message": "Argument error"
+        }
+        return json.dumps(err)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
